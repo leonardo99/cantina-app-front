@@ -37,4 +37,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         await fetchUser();
     };
 
+    const logout = async () => {
+        await api.post('/auth/logout');
+        setUser(null);
+    };
+
 }
