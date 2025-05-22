@@ -1,6 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from '@/contexts/Auth/AuthContext';
+import { AuthProvider } from '@/contexts/Auth/AuthContext';
 import Login from '@/Pages/Auth/Login';
+import Home from '@/Pages/Client/Home';
+import PrivateRoute from '@/Pages/Auth/PrivateRoutes';
+import PublicRoute from '@/Pages/Auth/PublicRoutes';
 
 function App() {
   
@@ -8,7 +11,14 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={ <Login /> }/>
+            <Route 
+                   path='/'
+                   element={ <PublicRoute><Login /></PublicRoute> }
+            />
+            <Route 
+                   path='/dashboard' 
+                   element={ <PrivateRoute><Home /></PrivateRoute> }
+            />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
