@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo  from "@/assets/logo.png";
 import { useAuth } from "@/contexts/Auth/AuthContext";
 
@@ -21,9 +21,12 @@ export default function Login() {
         handleSubmit,
     } = useForm<formData>();
 
+    const navigate = useNavigate();
+
     const onSubmit = async (data: formData) => {
         try {
             await login(data.email, data.password);
+            navigate('/dashboard');
         } catch {
             console.log("erro");
         }
