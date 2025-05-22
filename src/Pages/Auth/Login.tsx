@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link } from "react-router-dom";
 import Logo  from "@/assets/logo.png";
+import { useAuth } from "@/contexts/Auth/AuthContext";
 
 type formData = {
     email: string,
@@ -13,13 +14,19 @@ type formData = {
 }
 
 export default function Login() {
+    const { login } = useAuth();
+    
     const {
         register,
         handleSubmit,
     } = useForm<formData>();
 
-    const onSubmit = (data: formData) => {
-        console.log(data);
+    const onSubmit = async (data: formData) => {
+        try {
+            await login(data.email, data.password);
+        } catch {
+            console.log("erro");
+        }
     }
 
     return (

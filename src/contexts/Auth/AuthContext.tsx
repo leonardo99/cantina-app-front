@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const fetchUser = async () => {
         try {
-            const response = await api.get('/auth/user');
+            const response = await api.get('/user');
             setUser(response.data);
         } catch {
             setUser(null);
@@ -42,4 +42,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(null);
     };
 
-}
+    return (
+        <AuthContext.Provider value={{ user, login, logout }}>
+            { children }
+        </AuthContext.Provider>
+    )
+
+};
+
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (!context) throw new Error('useAuth deve ser usado dentro do AuthProvider');
+    return context;
+};
