@@ -12,7 +12,7 @@ export default function PrivateRoute({ children }: { children: JSX.Element }) {
 
     return (
         <>
-            <div className="w-full h-lvh flex justify-center items-center">
+            <div className="w-full h-lvh">
                 { children }
             </div>
         </>
