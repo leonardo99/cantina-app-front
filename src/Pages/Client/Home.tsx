@@ -7,11 +7,25 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "@/assets/logo.png";
 import Cart from "@/components/Client/cart/Cart";
+import { useAuth } from "@/contexts/Auth/AuthContext";
 
 export default function Home() {
+
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            navigate("/");
+        } catch {
+            console.log("error");
+        }
+    };
+
     return (
         <>
             <div className="flex items-center justify-between text-sm w-full p-3 bg-gray-100/20 shadow-b shadow-sm inset-shadow-gray-200">
@@ -27,7 +41,7 @@ export default function Home() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="mr-2">
                             <DropdownMenuItem>Meus Pedidos</DropdownMenuItem>
-                            <DropdownMenuItem>Sair</DropdownMenuItem>
+                            <DropdownMenuItem onClick={ () => handleLogout() }>Sair</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                     <Cart />
