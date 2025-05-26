@@ -37,3 +37,30 @@ export const saveProduct = async (data: Object) => {
         return [];
     }
 }
+
+export const deleteProduct = async (data: Product) => {
+    try {
+        const response = await api.delete(`admin/product/${data.id}/delete`);
+        return response.data;
+    } catch (error) {
+        return [];
+    }
+}
+
+export const showProduct = async (id: string) => {
+    try {
+        const response = await api.get(`admin/product/${id}`);
+        return response.data.data;
+    } catch (error) {
+        return [];
+    }
+}
+
+export const updateProduct = async (id: number, data: object) => {
+    try {
+        const response = await api.put(`admin/product/${id}/update`, data);
+        return response.data.data;
+    } catch (error) {
+        return [];
+    }
+}
