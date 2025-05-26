@@ -1,61 +1,19 @@
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { getProducts } from "@/services/product/product";
+import { deleteProduct, getProducts } from "@/services/product/product";
 import { useEffect, useState } from "react";
-import { number } from "zod";
-
-const invoices = [
-    {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+import { Link } from "react-router-dom";
+import Delete from "./Delete";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 interface ApiResponse<T> {
     data: T;
     links: any;
@@ -70,7 +28,6 @@ interface Product {
     amount: number,
 }
 
-
 export default function Index() {
     const [products, setProducts] = useState<ApiResponse<Product[]> | undefined>(undefined);
 
@@ -81,13 +38,24 @@ export default function Index() {
             } catch (error) {
                 console.log(error);
             }
-        }
+    }
     
-        useEffect(() => {
-            fetchCategories();
-        }, []);
-    
+    useEffect(() => {
+        fetchCategories();
+    }, []);
 
+    const handleDelete = async (item: Product) => {
+        try {
+            await deleteProduct(item);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            if (products?.data) {
+                const deleteItem = products?.data.filter(product => product.id !== item.id);
+                setProducts({...products, data: deleteItem}); 
+            }
+        }
+    }
     return (
         <>
             <Card className="rounded-sm">
@@ -104,22 +72,31 @@ export default function Index() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {
-                                    !products ? "" : (products?.data.map((product) => (
-                                        <TableRow key={product.id}>
-                                            <TableCell className="font-medium">{product.id}</TableCell>
-                                            <TableCell>{product.name}</TableCell>
-                                            <TableCell>{product.amount}</TableCell>
-                                            <TableCell className="text-right">Ações</TableCell>
-                                        </TableRow>
-                                    )))
-                                }
+                            {
+                                products?.data.length === 0 ? <TableCell colSpan={4}>Não há itens cadastrados</TableCell>:(products?.data.map((product) => (
+                                <TableRow key={product.id}>
+                                    <TableCell className="font-medium">{product.id}</TableCell>
+                                    <TableCell>{product.name}</TableCell>
+                                    <TableCell>{product.amount}</TableCell>
+                                    <TableCell className="text-right flex gap-1 justify-end">
+                                        <Delete data={ product } handleDelete={handleDelete}/>
+                                        <Link to={`/admin/product/${product.id}/edit`}>
+                                            <Button className="bg-amber-600 cursor-pointer hover:bg-amber-700">
+                                                <FontAwesomeIcon icon={faEdit} />
+                                            </Button>
+                                        </Link>
+                                    </TableCell>
+                                </TableRow>
+                                )))
+                            }
                             </TableBody>
-                            <TableFooter>
-                                sd
-                            </TableFooter>
                         </Table>
-
+                        <div className="w-full flex justify-between py-2">
+                            <Button variant={"secondary"} className="cursor-pointer">Voltar</Button>
+                            <Link to="/admin/product/create">
+                                <Button className="cursor-pointer">Novo produto</Button>
+                            </Link>
+                        </div>
                     </CardContent>
                 </CardHeader>   
             </Card>
