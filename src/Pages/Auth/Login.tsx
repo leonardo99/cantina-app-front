@@ -15,7 +15,6 @@ type formData = {
 
 export default function Login() {
     const { login } = useAuth();
-    
     const {
         register,
         handleSubmit,
