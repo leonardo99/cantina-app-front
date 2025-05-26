@@ -7,6 +7,7 @@ import PrivateRouteAdmin from '@/Pages/Auth/PrivateRouteAdmin';
 import PublicRoute from '@/Pages/Auth/PublicRoutes';
 import Form from '@/Pages/Admin/Product/Form';
 import Index from '@/Pages/Admin/Product/Index';
+import Edit from './Pages/Admin/Product/Edit';
 
 function App() {
   
@@ -33,6 +34,10 @@ function App() {
             <Route 
                    path='/admin/product/create' 
                    element={ <PrivateRouteAdmin><Form /></PrivateRouteAdmin> }
+            />
+            <Route 
+                   path='/admin/product/:productId/edit' 
+                   element={ <PrivateRouteAdmin><Edit /></PrivateRouteAdmin> }
             />
           </Routes>
         </BrowserRouter>

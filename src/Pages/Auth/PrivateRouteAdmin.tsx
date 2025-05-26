@@ -31,7 +31,7 @@ export default function PrivateRouteAdmin({ children }: { children: JSX.Element 
                                             <SidebarMenuItem 
                                             // key={project.name}
                                             >
-                                                <SidebarItem to="/admin/product/create">
+                                                <SidebarItem to="/admin/product/">
                                                     <FontAwesomeIcon icon={faBagShopping} />
                                                     <span>Produtos</span>
                                                 </SidebarItem>

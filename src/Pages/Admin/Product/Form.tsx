@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { getProducts, saveProduct } from "@/services/product/product";
+import { getProducts, saveProduct, showProduct, updateProduct } from "@/services/product/product";
 import { getCategories } from "@/services/category/category";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -29,8 +29,21 @@ interface Category {
     name: string;
 }
 
-export default function Form() {
+interface Product {
+    id:number;
+    category_id: number;
+    category: string,
+    name: string;
+    amount: number;
+}
+
+interface Data {
+    item?: string
+}
+
+export default function Form({ item }: Data ) {
     const [categories, setCategories] = useState<ApiResponse<Category[]> | undefined>(undefined);
+    const [product, setProduct] = useState<Product>();
     const navigate = useNavigate();
 
     const fetchCategories = async () => {
@@ -42,8 +55,21 @@ export default function Form() {
         }
     }
 
+    const fetchProduct = async (id: any) => {
+        try {
+            const listProduct = await showProduct(id);
+            setProduct(listProduct);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     useEffect(() => {
         fetchCategories();
+        if(item) {
+            fetchProduct(item)
+        }
     }, []);
 
     const categoriesArray = categories?.data.map((cat) => String(cat.id));
@@ -65,18 +91,34 @@ export default function Form() {
         }),
 
     });
-
+    
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            name: "",
-            amount: "",
-            category_id: "",
+            name: product?.name || "",
+            amount: product?.amount.toString() || "",
+            category_id: product?.category_id.toString() || "",
         },
+        shouldUnregister: false,
+        reValidateMode: 'onChange'
     });
+
+    useEffect(() => {
+        if (product) {
+            form.reset({
+                name: product.name,
+                amount: product.amount.toString(),
+                category_id: product.category_id.toString(),
+            });
+        }
+    }, [product, form.reset]);
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         try {
+            if(product?.id) {
+                await updateProduct(product?.id, data);
+                navigate('/admin/product');
+            }
             await saveProduct(data);
             navigate('/admin/product');
         } catch (error) {
@@ -88,7 +130,7 @@ export default function Form() {
         <>
             <Card className="rounded-sm">
                 <CardHeader>
-                    <CardTitle className="pb-2 border-b-1 border-b-gray-200">Cadastrar Produto</CardTitle>
+                    <CardTitle className="pb-2 border-b-1 border-b-gray-200">{item ? 'Editar' : 'Cadastrar'} Produto</CardTitle>
                     <CardContent className="p-0 pt-3">
                         <F {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -125,7 +167,7 @@ export default function Form() {
                                     render={({ field }) => (
                                         <FormItem>
                                         <FormLabel>Categoria</FormLabel>
-                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <Select onValueChange={field.onChange} value={field.value}  defaultValue={field.value}>
                                             <FormControl>
                                                 <SelectTrigger className="w-full">
                                                     <SelectValue placeholder="Selecione uma categoria" />
@@ -134,7 +176,7 @@ export default function Form() {
                                             <SelectContent className="flex grow">
                                                 {
                                                     !categories ? "" : (
-                                                        categories.data.map((cat) => <SelectItem key={cat.id} value={String(cat.id)}>{cat.name}</SelectItem>)
+                                                        categories.data.map((cat) => <SelectItem aria-selected={true} key={cat.id} value={String(cat.id)}>{cat.name}</SelectItem>)
                                                     )
                                                 }
                                             </SelectContent>
@@ -144,7 +186,7 @@ export default function Form() {
                                     )}
                                     />
                                 </div>
-                                <Button type="submit">Cadastrar</Button>
+                                <Button type="submit">{item ? "Editar": "Cadastrar"}</Button>
                             </form>
                         </F>
                     </CardContent>
