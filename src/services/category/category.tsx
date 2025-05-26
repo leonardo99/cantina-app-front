@@ -36,3 +36,21 @@ export const saveCategory = async (data: Object) => {
         return [];
     }
 }
+
+export const showCategory = async (id: string) => {
+    try {
+        const response = await api.get(`admin/category/${id}`);
+        return response.data.data;
+    } catch (error) {
+        return [];
+    }
+}
+
+export const updateCategory = async (id: number, data: object) => {
+    try {
+        const response = await api.put(`admin/category/${id}/update`, data);
+        return response.data.data;
+    } catch (error) {
+        return [];
+    }
+}

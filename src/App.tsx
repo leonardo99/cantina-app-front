@@ -8,6 +8,8 @@ import PublicRoute from '@/Pages/Auth/PublicRoutes';
 import Form from '@/Pages/Admin/Product/Form';
 import Index from '@/Pages/Admin/Product/Index';
 import Edit from './Pages/Admin/Product/Edit';
+import Category from './Pages/Admin/Category/Index';
+import FormCategory from './Pages/Admin/Category/Form';
 
 function App() {
   
@@ -38,6 +40,14 @@ function App() {
             <Route 
                    path='/admin/product/:productId/edit' 
                    element={ <PrivateRouteAdmin><Edit /></PrivateRouteAdmin> }
+            />
+            <Route 
+                   path='/admin/category' 
+                   element={ <PrivateRouteAdmin><Category /></PrivateRouteAdmin> }
+            />
+            <Route 
+                   path='/admin/category/create' 
+                   element={ <PrivateRouteAdmin><FormCategory /></PrivateRouteAdmin> }
             />
           </Routes>
         </BrowserRouter>

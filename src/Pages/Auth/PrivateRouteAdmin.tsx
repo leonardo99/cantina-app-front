@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/Auth/AuthContext";
 import type { JSX } from "react";
 import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
+import { faBagShopping, faList } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "@/components/Sidebar/SidebarItem";
 
 export default function PrivateRouteAdmin({ children }: { children: JSX.Element }) {
@@ -34,6 +34,10 @@ export default function PrivateRouteAdmin({ children }: { children: JSX.Element 
                                                 <SidebarItem to="/admin/product/">
                                                     <FontAwesomeIcon icon={faBagShopping} />
                                                     <span>Produtos</span>
+                                                </SidebarItem>
+                                                <SidebarItem to="/admin/category/">
+                                                    <FontAwesomeIcon icon={faList} />
+                                                    <span>Categorias</span>
                                                 </SidebarItem>
                                             </SidebarMenuItem>
                                         {/* ))} */}
