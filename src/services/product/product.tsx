@@ -35,11 +35,7 @@ export const getProductsByCategory = async (id?:string): Promise<ApiResponse<Pro
 
 export const getProductsUser = async (id?:string): Promise<ApiResponse<Product[]> | undefined> => {
     try {
-        let response;
-        if(id) {
-            response = await api.get<ApiResponse<Product[]>>(`admin/category/${id}`);   
-        }
-        response = await api.get<ApiResponse<Product[]>>("user/product");
+        const response = await api.get<ApiResponse<Product[]>>("user/product");
         return response.data;
     } catch (error) {
         console.error(error);
