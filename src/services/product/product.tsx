@@ -1,10 +1,4 @@
 import api from "@/services/api";
-
-interface Products {
-    id: number;
-    name: string;
-}
-
 interface Product {
     id:number;
     category_id: number;
@@ -22,6 +16,30 @@ interface ApiResponse<T> {
 export const getProducts = async (): Promise<ApiResponse<Product[]> | undefined> => {
     try {
         const response = await api.get<ApiResponse<Product[]>>("admin/product");
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return undefined;
+    }
+};
+
+export const getProductsByCategory = async (id?:string): Promise<ApiResponse<Product[]> | undefined> => {
+    try {
+        const response = await api.get<ApiResponse<Product[]>>(`user/category/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return undefined;
+    }
+};
+
+export const getProductsUser = async (id?:string): Promise<ApiResponse<Product[]> | undefined> => {
+    try {
+        let response;
+        if(id) {
+            response = await api.get<ApiResponse<Product[]>>(`admin/category/${id}`);   
+        }
+        response = await api.get<ApiResponse<Product[]>>("user/product");
         return response.data;
     } catch (error) {
         console.error(error);
