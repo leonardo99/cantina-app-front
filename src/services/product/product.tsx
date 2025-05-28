@@ -2,9 +2,13 @@ import api from "@/services/api";
 interface Product {
     id:number;
     category_id: number;
+    cart_item_id: number;
+    cart_id: number;
     category: string,
     name: string;
     amount: number;
+    quantity: number;
+    brute_amount: number;
 }
 
 interface ApiResponse<T> {
