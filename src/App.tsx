@@ -11,6 +11,10 @@ import Edit from '@/Pages/Admin/Product/Edit';
 import Category from '@/Pages/Admin/Category/Index';
 import FormCategory from '@/Pages/Admin/Category/Form';
 import Orders from '@/Pages/Client/Order/Orders';
+import DependentForm from '@/Pages/Client/Dependent/Form';
+import DependentList from '@/Pages/Client/Dependent/DependentList';
+import AdminRegister from './Pages/Auth/Admin/Register';
+import ClientRegister from './Pages/Auth/Client/Register';
 
 function App() {
   
@@ -23,8 +27,12 @@ function App() {
                    element={ <PublicRoute><Login /></PublicRoute> }
             />
             <Route 
-                   path='/dashboard' 
-                   element={ <PrivateRoute><Home /></PrivateRoute> }
+                   path='/admin/register'
+                   element={ <PublicRoute><AdminRegister /></PublicRoute> }
+            />
+            <Route 
+                   path='/client/register'
+                   element={ <PublicRoute><ClientRegister /></PublicRoute> }
             />
             <Route 
                    path='/dashboard' 
@@ -32,12 +40,20 @@ function App() {
             />
 
             <Route 
-                   path='/user/order/' 
+                   path='/user/order' 
                    element={ <PrivateRoute><Orders /></PrivateRoute> }
             />
+            <Route 
+                   path='/user/dependent/create' 
+                   element={ <PrivateRoute><DependentForm /></PrivateRoute> }
+            />
+            <Route 
+                   path='/user/dependent' 
+                   element={ <PrivateRoute><DependentList /></PrivateRoute> }
+            />
 
             <Route 
-                   path='/admin/product/' 
+                   path='/admin/product' 
                    element={ <PrivateRouteAdmin><Index /></PrivateRouteAdmin> }
             />
             <Route 
