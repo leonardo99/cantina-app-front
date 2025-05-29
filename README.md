@@ -59,11 +59,11 @@ cd cantina-app-front
 ### 2. Instalar as dependências
 
 ```bash
-yarn install
+npm install
 ```
 
 ### 3. Iniciar a aplicação
 
 ```bash
-yarn start
+npm start
 ```
