@@ -60,7 +60,7 @@ export default function Login() {
                             </div>
                             <div className="flex justify-between mt-3">
                                 <div>
-                                    <Link className="underline text-sm text-primary" to="/">Registrar usuário</Link>
+                                    <Link className="underline text-sm text-primary" to="/register">Registrar usuário</Link>
                                 </div>
                                 <Button type="submit">Entrar</Button>
                             </div>
