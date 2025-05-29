@@ -17,6 +17,7 @@ import { getProducts, saveProduct, showProduct, updateProduct } from "@/services
 import { getCategories } from "@/services/category/category";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { IMaskInput } from 'react-imask';
 
 interface ApiResponse<T> {
     data: T;
@@ -143,18 +144,37 @@ export default function Form({ item }: Data ) {
                                     )}
                                     />
                                     <FormField
-                                    control={form.control}
-                                    name="amount"
-                                    render={({ field }) => (
+                                        control={form.control}
+                                        name="amount"
+                                        render={({ field }) => (
                                         <FormItem>
                                         <FormLabel>Preço</FormLabel>
-                                        <FormControl className="w-full">
-                                            <Input {...field} />
+                                        <FormControl>
+                                            <IMaskInput
+                                            // Aqui garantimos que sempre há um valor string
+                                            value={field.value ?? ''}
+                                            onAccept={(val: any) => field.onChange(val)}
+                                            // Máscara de moeda com separador e decimal
+                                            mask="R$ num"
+                                            blocks={{
+                                                num: {
+                                                mask: Number,
+                                                thousandsSeparator: '.',
+                                                radix: ',',
+                                                scale: 2,
+                                                padFractionalZeros: true,
+                                                normalizeZeros: true,
+                                                },
+                                            }}
+                                            unmask={true} // envia valor puro para o RHF (ex: 1000.50)
+                                            placeholder="R$ 0,00"
+                                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                            />
                                         </FormControl>
-                                        <FormMessage className="text-xs"/>
-                                        </FormItem>
-                                    )}
-                                    />
+                                        <FormMessage />
+                                    </FormItem>
+  )}
+/>
                                     <FormField
                                     control={form.control}
                                     name="category_id"
