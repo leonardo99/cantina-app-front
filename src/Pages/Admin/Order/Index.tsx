@@ -113,7 +113,7 @@ export default function OrderListAdmin() {
                             </TableBody>
                         </Table>
                         <div className="w-full flex justify-between py-2">
-                            <Link to="/dashboard">
+                            <Link to="/admin/painel">
                                 <Button variant={"secondary"} className="cursor-pointer">Voltar</Button>
                             </Link>
                         </div>
