@@ -3,13 +3,15 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/Auth/AuthContext";
 import type { JSX } from "react";
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBagShopping, faList } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faBagShopping, faList } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "@/components/Sidebar/SidebarItem";
+import { Button } from "@/components/ui/button";
+import { Ghost } from "lucide-react";
 
 export default function PrivateRouteAdmin({ children }: { children: JSX.Element }) {
-    const { user, loading } = useAuth();
+    const { user, loading, logout } = useAuth();
     
     if (loading) return <div>Carregando...</div>;
     
@@ -45,6 +47,11 @@ export default function PrivateRouteAdmin({ children }: { children: JSX.Element 
                                 </SidebarGroupContent>
                                 </SidebarGroup>
                             </SidebarContent>
+                            <SidebarFooter>
+                                <Button variant="ghost" className="cursor-pointer" onClick={() => logout()}>
+                                    <FontAwesomeIcon icon={faArrowRightFromBracket}/>Sair
+                                </Button>
+                            </SidebarFooter>
                         </Sidebar>
                     </main>
                     <div className="p-5 w-full">
