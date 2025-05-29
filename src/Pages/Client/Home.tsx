@@ -3,7 +3,7 @@ import ProductItem from "@/components/Client/Item/Item";
 import SideBar from "@/components/Client/Sidebar/SideBar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CartProvider } from "@/contexts/Cart/CartContext";
-import { getCategories } from "@/services/category/category";
+import { getCategoriesClient } from "@/services/category/category";
 import { getProductsByCategory, getProductsUser } from "@/services/product/product";
 import { useEffect, useState } from "react";
 
@@ -39,7 +39,7 @@ export default function Home() {
 
     const fetchCategories = async () => {
         try {
-            const categoriesList = await getCategories();
+            const categoriesList = await getCategoriesClient();
             setCategories(categoriesList?.data);
         } catch (error) {
             console.log(error);
