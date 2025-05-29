@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input"
 import { saveUser } from "@/services/user/user";
 import { useNavigate } from "react-router-dom";
 import IndexClient from "../Index";
+import { useAuth } from "@/contexts/Auth/AuthContext";
 
 interface User {
     name: string,
@@ -24,18 +25,25 @@ interface User {
 
 export default function DependentForm() {
 
+    const { user } = useAuth();
 
     const navigate = useNavigate();
     
+    if(user.data.type === 'student' || user.data.type === 'admin') {
+        navigate('/dashboard');
+    }
+    
     const FormSchema = z.object({
         name: z.string().min(2, {
-            message: "Username must be at least 2 characters.",
+        message: "O nome deve ter pelo menos 2 caracteres.",
         }),
-        email: z.string().min(2, {
-            message: "Username must be at least 2 characters.",
+        email: z.string().email({
+            message: "Formato de email inválido.",
+        }).min(2, {
+            message: "O email deve ter pelo menos 2 caracteres.",
         }),
-        phone: z.string().min(2, {
-            message: "Username must be at least 2 characters.",
+        phone: z.string().min(8, {
+            message: "O telefone deve ter pelo menos 8 dígitos.",
         }),
     });
     
@@ -77,7 +85,7 @@ export default function DependentForm() {
                                                 <FormControl>
                                                     <Input {...field} />
                                                 </FormControl>
-                                                <FormMessage />
+                                                <FormMessage className="text-xs"/>
                                             </FormItem>
                                         )}
                                         />
@@ -90,7 +98,7 @@ export default function DependentForm() {
                                             <FormControl className="w-full">
                                                 <Input {...field} />
                                             </FormControl>
-                                            <FormMessage />
+                                            <FormMessage className="text-xs"/>
                                             </FormItem>
                                         )}
                                         />
@@ -103,7 +111,7 @@ export default function DependentForm() {
                                             <FormControl className="w-full">
                                                 <Input {...field} />
                                             </FormControl>
-                                            <FormMessage />
+                                            <FormMessage className="text-xs"/>
                                             </FormItem>
                                         )}
                                         />

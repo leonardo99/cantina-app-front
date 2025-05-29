@@ -17,7 +17,7 @@ import AdminRegister from './Pages/Auth/Admin/Register';
 import ClientRegister from './Pages/Auth/Client/Register';
 import Painel from './Pages/Admin/Painel/Index';
 import OrderListAdmin from './Pages/Admin/Order/Index';
-import OrderReport from './Pages/Admin/Report/Index';
+import AdminLogin from './Pages/Auth/AdminLogin';
 
 function App() {
   
@@ -28,6 +28,10 @@ function App() {
             <Route 
                    path='/'
                    element={ <PublicRoute><Login /></PublicRoute> }
+            />
+            <Route 
+                   path='/admin/login'
+                   element={ <PublicRoute><AdminLogin /></PublicRoute> }
             />
             <Route 
                    path='/admin/register'

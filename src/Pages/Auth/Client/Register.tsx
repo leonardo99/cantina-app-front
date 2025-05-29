@@ -103,7 +103,7 @@ export default function ClientRegister() {
                             </div>
                             <div className="flex justify-between mt-3">
                                 <div>
-                                    <Link className="underline text-sm text-primary" to="/admin/login">Fazer login</Link>
+                                    <Link className="underline text-sm text-primary" to="/">Fazer login</Link>
                                 </div>
                                 <Button type="submit">Criar Usuário</Button>
                             </div>

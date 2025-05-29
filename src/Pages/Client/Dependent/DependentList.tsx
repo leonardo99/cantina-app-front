@@ -5,6 +5,7 @@ import IndexClient from "../Index";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useEffect, useState } from "react";
 import { getDependents } from "@/services/user/user";
+import { useAuth } from "@/contexts/Auth/AuthContext";
 
 interface User {
     id: number,
@@ -21,19 +22,25 @@ interface ApiResponse<T> {
 export default function DependentForm() {
 
     const [dependents, setDependents] = useState<ApiResponse<User[]> | undefined>(undefined);
+    const { user } = useAuth();
+    const navigate = useNavigate();
     
-        const fetchDependents = async () => {
-                try {
-                    const response = await getDependents();
-                    setDependents(response);
-                } catch (error) {
-                    console.log(error);
-                }
-        }
-        
-        useEffect(() => {
-            fetchDependents();
-        }, []);
+    if(user.data.type === 'student' || user.data.type === 'admin') {
+        navigate('/dashboard');
+    }
+
+    const fetchDependents = async () => {
+            try {
+                const response = await getDependents();
+                setDependents(response);
+            } catch (error) {
+                console.log(error);
+            }
+    }
+    
+    useEffect(() => {
+        fetchDependents();
+    }, []);
     return (
         <>
             <IndexClient>
@@ -62,6 +69,9 @@ export default function DependentForm() {
                             <div className="w-full flex justify-between py-2">
                                 <Link to="/dashboard">
                                     <Button variant={"secondary"} className="cursor-pointer">Voltar</Button>
+                                </Link>
+                                <Link to="/user/dependent/create">
+                                    <Button className="cursor-pointer">Adicionar</Button>
                                 </Link>
                             </div>
                         </CardContent>

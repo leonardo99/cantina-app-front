@@ -71,26 +71,20 @@ export default function Form({ item }: Data ) {
             fetchProduct(item)
         }
     }, []);
-
-    const categoriesArray = categories?.data.map((cat) => String(cat.id));
-
+    
     const FormSchema = z.object({
-        name: z.string().min(2, {
-            message: "Username must be at least 2 characters.",
+    name: z.string().min(2, { message: "O nome deve ter pelo menos 2 caracteres." }).max(255),
+    amount: z.string()
+        .refine((val) => /^\d+(\.\d{1,2})?$/.test(val), {
+            message: "O preço deve ser um número decimal com no máximo 2 casas decimais.",
+        })
+        .refine((val) => parseFloat(val) >= 0.01, {
+            message: "O preço deve ser maior ou igual a 0.01.",
         }),
-        amount: z.string().min(2, {
-            message: "Username must be at least 2 characters.",
-        }),
-        category_id: z.string().refine((category_id) => {
-        if (!categoriesArray) {
-            return false;
-        }
-            return categoriesArray.includes(category_id);
-        }, {
-            message: "Categoria inválida."
-        }),
-
-    });
+    category_id: z.string().refine((val) => !isNaN(parseInt(val)), {
+        message: "O ID da categoria é inválido.",
+    }),
+});
     
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -144,7 +138,7 @@ export default function Form({ item }: Data ) {
                                             <FormControl>
                                                 <Input {...field} />
                                             </FormControl>
-                                            <FormMessage />
+                                            <FormMessage className="text-xs"/>
                                         </FormItem>
                                     )}
                                     />
@@ -157,7 +151,7 @@ export default function Form({ item }: Data ) {
                                         <FormControl className="w-full">
                                             <Input {...field} />
                                         </FormControl>
-                                        <FormMessage />
+                                        <FormMessage className="text-xs"/>
                                         </FormItem>
                                     )}
                                     />
@@ -181,7 +175,7 @@ export default function Form({ item }: Data ) {
                                                 }
                                             </SelectContent>
                                         </Select>
-                                        <FormMessage />
+                                        <FormMessage className="text-xs"/>
                                         </FormItem>
                                     )}
                                     />

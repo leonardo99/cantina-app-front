@@ -46,9 +46,7 @@ export default function FormCategory({ item }: Data ) {
     }, []);
 
     const FormSchema = z.object({
-        name: z.string().min(2, {
-            message: "Username must be at least 2 characters.",
-        }),
+        name: z.string().min(2, { message: "O nome deve ter pelo menos 2 caracteres." }).max(255),
     });
     
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -81,7 +79,7 @@ export default function FormCategory({ item }: Data ) {
         <>
             <Card className="rounded-sm">
                 <CardHeader>
-                    <CardTitle className="pb-2 border-b-1 border-b-gray-200">{item ? 'Editar' : 'Cadastrar'} Produto</CardTitle>
+                    <CardTitle className="pb-2 border-b-1 border-b-gray-200">{item ? 'Editar' : 'Cadastrar'} Categoria</CardTitle>
                     <CardContent className="p-0 pt-3">
                         <F {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -95,7 +93,7 @@ export default function FormCategory({ item }: Data ) {
                                             <FormControl>
                                                 <Input {...field} />
                                             </FormControl>
-                                            <FormMessage />
+                                            <FormMessage className="text-xs" />
                                         </FormItem>
                                     )}
                                     />

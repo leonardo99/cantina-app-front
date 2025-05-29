@@ -63,6 +63,7 @@ export default function Cart () {
                                 </div>)
                             })) : <div className="p-2 font-light">Nenhum item no carrinho</div>
                     }
+                            
                     {
                         cart.length ? (
                             <div className="mt-auto border-t border-t-gray-200 flex flex-col justify-end p-2 space-y-2">

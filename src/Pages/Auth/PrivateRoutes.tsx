@@ -8,7 +8,11 @@ export default function PrivateRoute({ children }: { children: JSX.Element }) {
     const { user, loading } = useAuth();
     if (loading) return <div>Carregando...</div>;
            
-    if(user === null || user.data.type === "admin") return <Navigate to="/" />
+    if(user === null) return <Navigate to="/" />
+
+    if(user.data.type === "admin")  {
+        return <Navigate to="/admin/painel" />
+    }
 
     return (
         <>
