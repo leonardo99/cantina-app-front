@@ -5,10 +5,9 @@ import { useAuth } from "@/contexts/Auth/AuthContext";
 import type { JSX } from "react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightFromBracket, faBagShopping, faList } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faBagShopping, faList, faTable } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "@/components/Sidebar/SidebarItem";
 import { Button } from "@/components/ui/button";
-import { Ghost } from "lucide-react";
 
 export default function PrivateRouteAdmin({ children }: { children: JSX.Element }) {
     const { user, loading, logout } = useAuth();
@@ -40,6 +39,10 @@ export default function PrivateRouteAdmin({ children }: { children: JSX.Element 
                                                 <SidebarItem to="/admin/category/">
                                                     <FontAwesomeIcon icon={faList} />
                                                     <span>Categorias</span>
+                                                </SidebarItem>
+                                                <SidebarItem to="/admin/painel">
+                                                    <FontAwesomeIcon icon={faTable} />
+                                                    <span>Painel</span>
                                                 </SidebarItem>
                                             </SidebarMenuItem>
                                         {/* ))} */}
