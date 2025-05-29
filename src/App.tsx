@@ -15,6 +15,7 @@ import DependentForm from '@/Pages/Client/Dependent/Form';
 import DependentList from '@/Pages/Client/Dependent/DependentList';
 import AdminRegister from './Pages/Auth/Admin/Register';
 import ClientRegister from './Pages/Auth/Client/Register';
+import Painel from './Pages/Admin/Painel/Index';
 
 function App() {
   
@@ -71,6 +72,10 @@ function App() {
             <Route 
                    path='/admin/category/create' 
                    element={ <PrivateRouteAdmin><FormCategory /></PrivateRouteAdmin> }
+            />
+            <Route 
+                   path='/admin/painel' 
+                   element={ <PrivateRouteAdmin><Painel /></PrivateRouteAdmin> }
             />
           </Routes>
         </BrowserRouter>
