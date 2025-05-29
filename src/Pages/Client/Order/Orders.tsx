@@ -1,14 +1,14 @@
-import IndexOrder from "./Index";
+import IndexClient from "../Index";
 import OrderList from "./OrdersList";
 
 export default function Orders() {
     return (
         <>
-            <IndexOrder>
+            <IndexClient>
                 <div>
                     <OrderList />
                 </div>
-            </IndexOrder>   
+            </IndexClient>   
         </>
     )
 
