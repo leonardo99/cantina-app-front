@@ -25,6 +25,7 @@ export default function Login() {
     const onSubmit = async (data: formData) => {
         try {
             await login(data.email, data.password);
+  
             navigate('/dashboard');
         } catch {
             console.log("erro");
