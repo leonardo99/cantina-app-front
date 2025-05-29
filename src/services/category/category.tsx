@@ -28,6 +28,16 @@ export const getCategories = async (): Promise<ApiResponse<Category[]> | undefin
     }
 };
 
+export const getCategoriesClient = async (): Promise<ApiResponse<Category[]> | undefined> => {
+    try {
+        const response = await api.get<ApiResponse<Category[]>>("user/category");
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return undefined;
+    }
+};
+
 export const saveCategory = async (data: Object) => {
     try {
         const response = await api.post<Category | null>("admin/category", data);
