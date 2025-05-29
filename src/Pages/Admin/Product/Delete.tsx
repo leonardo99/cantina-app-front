@@ -15,11 +15,15 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface Product {
-    id: number,
-    category_id: number,
+    id:number;
+    category_id: number;
+    cart_item_id: number;
+    cart_id: number;
     category: string,
-    name: string,
-    amount: number,
+    name: string;
+    amount: number;
+    quantity: number;
+    brute_amount: number;
 }
 
 interface Data {
