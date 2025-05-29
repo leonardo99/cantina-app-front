@@ -16,6 +16,7 @@ import DependentList from '@/Pages/Client/Dependent/DependentList';
 import AdminRegister from './Pages/Auth/Admin/Register';
 import ClientRegister from './Pages/Auth/Client/Register';
 import Painel from './Pages/Admin/Painel/Index';
+import OrderListAdmin from './Pages/Admin/Order/Index';
 
 function App() {
   
@@ -76,6 +77,10 @@ function App() {
             <Route 
                    path='/admin/painel' 
                    element={ <PrivateRouteAdmin><Painel /></PrivateRouteAdmin> }
+            />
+            <Route 
+                   path='/admin/order' 
+                   element={ <PrivateRouteAdmin><OrderListAdmin /></PrivateRouteAdmin> }
             />
           </Routes>
         </BrowserRouter>
