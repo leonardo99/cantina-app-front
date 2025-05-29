@@ -10,9 +10,6 @@ import {
 } from "@/components/ui/table"
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-// import Delete from "./Delete";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { getCategories } from "@/services/category/category";
 
 interface Category {
@@ -59,8 +56,8 @@ export default function Category() {
                             {
                                 categories?.data.length === 0 ? <TableCell colSpan={3}>Não há itens cadastrados</TableCell>:(categories?.data.map((item) => (
                                 <TableRow key={item.id}>
-                                    <TableCell className="font-medium py-4">{item.id}</TableCell>
-                                    <TableCell className="font-medium py-4">{item.name}</TableCell>
+                                    <TableCell className="font-normal py-4">{item.id}</TableCell>
+                                    <TableCell className="font-normal py-4">{item.name}</TableCell>
                                 </TableRow>
                                 )))
                             }

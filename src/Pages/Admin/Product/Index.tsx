@@ -75,7 +75,7 @@ export default function Index() {
                             {
                                 products?.data.length === 0 ? <TableCell colSpan={4}>Não há itens cadastrados</TableCell>:(products?.data.map((product) => (
                                 <TableRow key={product.id}>
-                                    <TableCell className="font-medium">{product.id}</TableCell>
+                                    <TableCell className="font-normal">{product.id}</TableCell>
                                     <TableCell>{product.name}</TableCell>
                                     <TableCell>{product.amount}</TableCell>
                                     <TableCell className="text-right flex gap-1 justify-end">
