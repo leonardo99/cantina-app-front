@@ -40,7 +40,9 @@ export default function SideBar() {
                                 <FontAwesomeIcon icon={faUser} />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="mr-2">
-                            <DropdownMenuItem>Meus Pedidos</DropdownMenuItem>
+                            <Link to="/user/order">
+                                <DropdownMenuItem>Meus Pedidos</DropdownMenuItem>
+                            </Link>
                             <DropdownMenuItem onClick={ () => handleLogout() }>Sair</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

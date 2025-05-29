@@ -7,9 +7,10 @@ import PrivateRouteAdmin from '@/Pages/Auth/PrivateRouteAdmin';
 import PublicRoute from '@/Pages/Auth/PublicRoutes';
 import Form from '@/Pages/Admin/Product/Form';
 import Index from '@/Pages/Admin/Product/Index';
-import Edit from './Pages/Admin/Product/Edit';
-import Category from './Pages/Admin/Category/Index';
-import FormCategory from './Pages/Admin/Category/Form';
+import Edit from '@/Pages/Admin/Product/Edit';
+import Category from '@/Pages/Admin/Category/Index';
+import FormCategory from '@/Pages/Admin/Category/Form';
+import Orders from '@/Pages/Client/Order/Orders';
 
 function App() {
   
@@ -29,6 +30,12 @@ function App() {
                    path='/dashboard' 
                    element={ <PrivateRoute><Home /></PrivateRoute> }
             />
+
+            <Route 
+                   path='/user/order/' 
+                   element={ <PrivateRoute><Orders /></PrivateRoute> }
+            />
+
             <Route 
                    path='/admin/product/' 
                    element={ <PrivateRouteAdmin><Index /></PrivateRouteAdmin> }
