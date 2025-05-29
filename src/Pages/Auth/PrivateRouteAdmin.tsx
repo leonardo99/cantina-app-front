@@ -5,7 +5,7 @@ import { useAuth } from "@/contexts/Auth/AuthContext";
 import type { JSX } from "react";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightFromBracket, faBagShopping, faList, faNoteSticky, faTable } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faBagShopping, faList, faNoteSticky, faReceipt, faTable } from "@fortawesome/free-solid-svg-icons";
 import SidebarItem from "@/components/Sidebar/SidebarItem";
 import { Button } from "@/components/ui/button";
 

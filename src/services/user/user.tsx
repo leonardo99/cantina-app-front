@@ -30,6 +30,15 @@ export const getDependents = async (): Promise<ApiResponse<User[]> | undefined> 
     }
 }
 
+export const getUsers = async (): Promise<ApiResponse<User[]> | undefined> => {
+    try {
+        const response = await api.get<ApiResponse<User[]>>("/admin/users/");
+        return response.data;
+    } catch (error) {
+        return undefined;
+    }
+}
+
 export const registerUser = async (data: Object) => {
     try {
         const response = await api.post<User | null>("user/store", data);
@@ -38,3 +47,4 @@ export const registerUser = async (data: Object) => {
         return [];
     }
 }
+
