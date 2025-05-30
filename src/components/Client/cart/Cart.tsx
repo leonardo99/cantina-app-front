@@ -11,6 +11,25 @@ import {
 import { faCartShopping, faMinus, faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useCart } from "@/contexts/Cart/CartContext"
+import { useAuth } from "@/contexts/Auth/AuthContext"
+import { Label } from "@/components/ui/label"
+import { Controller, useForm } from "react-hook-form"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useEffect, useState } from "react"
+import { getDependents } from "@/services/user/user"
+
+interface User {
+    id: number,
+    name: string,
+    email: string,
+    type: string
+}
+
+interface ApiResponse<T> {
+    data: T;
+    links: any;
+    meta: any;
+}
 
 export default function Cart () {
 
@@ -25,7 +44,32 @@ export default function Cart () {
         calculateTotalCart,
         saveOrder,
     } = useCart();
+
+    const { user } = useAuth();
+
+    const {
+            register,
+            handleSubmit,
+            control,
+            formState: { errors },
+    } = useForm();
+
+    const [dependentId, setDependentId] = useState<string|null>(null);
+    const [dependents, setDependents] = useState<ApiResponse<User[]> | undefined>(undefined);
     
+    const fetchDependents = async() => {
+        try {
+            const dependentList = await getDependents();
+            setDependents(dependentList);
+        } catch (error) {
+            setDependents(undefined);
+        }
+    };
+
+    useEffect(() => {
+        fetchDependents();
+    }, [])
+
     return (
         <>
             <Sheet open={cartOpen} onOpenChange={setOpen}>
@@ -39,6 +83,43 @@ export default function Cart () {
                     <SheetHeader className="border-b border-b-gray-200">
                         <SheetTitle>Meu Carrinho</SheetTitle>
                     </SheetHeader>
+
+                    {
+                        cart.length && user?.data.type === 'responsible' ? (
+                            <div className="p-3">
+                                <div className="flex flex-col space-y-1.5">
+                                    <Label htmlFor="dependent_id">Escolha um dependente</Label>
+                                    <Controller
+                                    name="dependent_id"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <Select 
+                                        onValueChange={
+                                            (newValue) => {
+                                                setDependentId(newValue);
+                                            }
+                                        } 
+                                        defaultValue={field.value}>
+                                            <SelectTrigger id="dependent_id" className="w-full">
+                                                <SelectValue placeholder="Selecione um dependente" />
+                                            </SelectTrigger>
+                                            <SelectContent position="popper">
+                                                {
+                                                    dependents?.data.length ? (
+                                                        dependents.data.map((item) => (
+                                                            <SelectItem key={item.id} value={`${item.id}`}>{item.name}</SelectItem>
+                                                        ))
+                                                    ) : ""
+                                                }
+                                            </SelectContent>
+                                        </Select>
+                                    )}
+                                    />
+                                </div>
+                            </div>
+                        ) : ""
+                    }
+
                     {
                         cart.length ? (
                             cart.map((item) => {
@@ -68,7 +149,7 @@ export default function Cart () {
                         cart.length ? (
                             <div className="mt-auto border-t border-t-gray-200 flex flex-col justify-end p-2 space-y-2">
                                 <p className="font-bold text-xl ml-auto"><span className="font-normal text-sm">Total:</span> { calculateTotalCart() }</p>
-                                <Button className="font-medium cursor-pointer uppercase" onClick={() => saveOrder()}>Concluir compra</Button>
+                                <Button className="font-medium cursor-pointer uppercase" onClick={() => saveOrder(dependentId)}>Concluir compra</Button>
                             </div>
                         ) : ""
                     }

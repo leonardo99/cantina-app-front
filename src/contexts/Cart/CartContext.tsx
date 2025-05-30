@@ -23,7 +23,7 @@ type CartContextType = {
   incrementQuantity: (id: number) => void;
   decrementQuantity: (id: number) => void;
   getTotalProducts: () => number;
-  saveOrder: () => void;
+  saveOrder: (dependent_id?: string | null) => void;
   calculateTotalCart: () => string;
 };
 
@@ -101,16 +101,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         );
     };
 
-    const saveOrder = async() => {
+    const saveOrder = async(dependent_id: string | null = null) => {
         try {
             const formatedProducts = cart.map(({cart_id, id, brute_amount, quantity}) => ({
                 cart_id,
                 product_id: id,
                 price: brute_amount,
-                amount: quantity
+                amount: quantity,
             }));
 
-            await api.post('/user/order', formatedProducts);
+            await api.post('/user/order', {dependent_id: dependent_id, items: formatedProducts});
             setCart([]);
         } catch (error) {
             console.log(error);
