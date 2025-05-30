@@ -17,6 +17,7 @@ interface Order {
     total_value: number,
     status: string,
     items: OrderItem[],
+    created_at: string
 }
 
 interface ApiResponse<T> {

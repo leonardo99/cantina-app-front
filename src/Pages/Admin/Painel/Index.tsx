@@ -24,6 +24,7 @@ interface Order {
     total_value: number,
     status: string,
     items: OrderItem[],
+    created_at: string,
 }
 
 interface ApiResponse<T> {
@@ -147,7 +148,7 @@ export default function Painel() {
                                             <ul key={i} className="bg-gray-100/25 p-2  text-sm flex flex-col gap-1">
                                                 <li className="flex justify-between font-medium">
                                                     <h3>Pedido #{item.id}</h3>
-                                                    <h3 className="text-xs">às 12:40</h3>
+                                                    <h3 className="text-xs">{item.created_at}</h3>
                                                 </li>
                                                 {
                                                     item?.items.map((orderItem) => (
