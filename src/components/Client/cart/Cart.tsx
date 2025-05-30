@@ -17,6 +17,8 @@ import { Controller, useForm } from "react-hook-form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useEffect, useState } from "react"
 import { getDependents } from "@/services/user/user"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 interface User {
     id: number,
@@ -30,6 +32,12 @@ interface ApiResponse<T> {
     links: any;
     meta: any;
 }
+
+const dependentSchema = z.object({
+  dependent_id: z.string().min(1, { message: "Selecione um dependente" }),
+});
+
+export type DependentFormData = z.infer<typeof dependentSchema>;
 
 export default function Cart () {
 
@@ -47,12 +55,13 @@ export default function Cart () {
 
     const { user } = useAuth();
 
-    const {
-            register,
-            handleSubmit,
-            control,
-            formState: { errors },
-    } = useForm();
+    const { 
+        handleSubmit, 
+        control, 
+        formState: { errors } 
+    } = useForm<DependentFormData>({
+        resolver: zodResolver(dependentSchema),
+    });
 
     const [dependentId, setDependentId] = useState<string|null>(null);
     const [dependents, setDependents] = useState<ApiResponse<User[]> | undefined>(undefined);
@@ -97,9 +106,10 @@ export default function Cart () {
                                         onValueChange={
                                             (newValue) => {
                                                 setDependentId(newValue);
+                                                field.onChange(newValue);
                                             }
                                         } 
-                                        defaultValue={field.value}>
+                                        defaultValue={`${dependents?.data[0].id}`}>
                                             <SelectTrigger id="dependent_id" className="w-full">
                                                 <SelectValue placeholder="Selecione um dependente" />
                                             </SelectTrigger>
@@ -115,6 +125,9 @@ export default function Cart () {
                                         </Select>
                                     )}
                                     />
+                                    {errors.dependent_id && (
+                                    <p className="text-sm text-destructive">{errors.dependent_id.message}</p>
+                                    )}
                                 </div>
                             </div>
                         ) : ""
