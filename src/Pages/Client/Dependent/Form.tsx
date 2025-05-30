@@ -16,6 +16,7 @@ import { saveUser } from "@/services/user/user";
 import { useNavigate } from "react-router-dom";
 import IndexClient from "../Index";
 import { useAuth } from "@/contexts/Auth/AuthContext";
+import { toast } from "sonner";
 
 interface User {
     name: string,
@@ -60,8 +61,18 @@ export default function DependentForm() {
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         try {
             await saveUser(data);
+            toast("Erro", {
+                description: "Dependente cadastrado com sucesso",
+                position: "top-center",
+                duration: 2000, 
+            });
             navigate('/user/dependent/');
         } catch (error) {
+            toast("Erro", {
+                description: "Ocorreu um erro",
+                position: "top-center",
+                duration: 2000, 
+            });
             console.log(error);
         }
     }

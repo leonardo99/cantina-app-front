@@ -13,11 +13,12 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { getProducts, saveProduct, showProduct, updateProduct } from "@/services/product/product";
+import { saveProduct, showProduct, updateProduct } from "@/services/product/product";
 import { getCategories } from "@/services/category/category";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { IMaskInput } from 'react-imask';
+import { toast } from "sonner";
 
 interface ApiResponse<T> {
     data: T;
@@ -114,6 +115,11 @@ export default function Form({ item }: Data ) {
                 await updateProduct(product?.id, data);
                 navigate('/admin/product');
             }
+            toast("Sucesso", {
+                description: `Produto ${product?.id ? "alterado" : "salvo "} com sucesso`,
+                position: "top-right",
+                duration: 2000, 
+            });
             await saveProduct(data);
             navigate('/admin/product');
         } catch (error) {

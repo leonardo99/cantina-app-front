@@ -9,6 +9,7 @@ import Logo  from "@/assets/logo.png";
 import { useAuth } from "@/contexts/Auth/AuthContext";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 
 // type formData = {
 //     email: string,
@@ -38,8 +39,12 @@ export default function Login() {
     const onSubmit = async (data: formData) => {
         try {
             await login(data.email, data.password);
-        } catch {
-            console.log("erro");
+        } catch(error) {
+            toast("Erro", {
+                description: error.response.data.error,
+                position: "top-center",
+                duration: 2000, 
+            });
         }
     }
 

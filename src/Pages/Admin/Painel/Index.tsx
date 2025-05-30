@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { getOrdersByStatus, updateStatusOrder } from "@/services/order/client/order";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface Product {
     name: string
@@ -85,6 +86,11 @@ export default function Painel() {
             meta: prev?.meta,
         }));
         await updateStatusOrder(order.id, {status:"preparing"});
+        toast("Sucesso", {
+                description: "Pedido em preparação",
+                position: "top-right",
+                duration: 2000, 
+        });
     };
 
     const sendToPreparedOrders = async (order: Order) => {
@@ -100,6 +106,11 @@ export default function Painel() {
             links: prev?.links,
             meta: prev?.meta,
         }));
+        toast("Sucesso", {
+                description: "Pedido preparado",
+                position: "top-right",
+                duration: 2000, 
+        });
         await updateStatusOrder(order.id, {status:"prepared"});
     };
 
@@ -110,6 +121,11 @@ export default function Painel() {
             links: prev?.links,
             meta: prev?.meta,
         }));
+        toast("Sucesso", {
+                description: "Pedido entregue",
+                position: "top-right",
+                duration: 2000, 
+        });
         await updateStatusOrder(order.id, {status:"delivered"});
     };
 

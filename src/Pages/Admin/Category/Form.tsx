@@ -15,7 +15,9 @@ import { Input } from "@/components/ui/input"
 import { saveCategory, showCategory } from "@/services/category/category";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "sonner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 interface Category {
     id: number;
     name: string;
@@ -69,8 +71,20 @@ export default function FormCategory({ item }: Data ) {
     async function onSubmit(data: z.infer<typeof FormSchema>) {
         try {
             await saveCategory(data);
+            toast("Sucesso", {
+                description: "Categoria salva com sucesso",
+                position: "top-right",
+                duration: 2000,
+                
+            });
             navigate('/admin/category');
         } catch (error) {
+            toast("Erro", {
+                description: "Ocorreu um erro",
+                position: "top-right",
+                duration: 2000,
+                
+            });
             console.log(error);
         }
     }

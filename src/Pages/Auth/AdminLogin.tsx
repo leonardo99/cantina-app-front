@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Link, useNavigate } from "react-router-dom";
 import Logo  from "@/assets/logo.png";
 import { useAuth } from "@/contexts/Auth/AuthContext";
+import { toast } from "sonner";
 
 type formData = {
     email: string,
@@ -25,8 +26,12 @@ export default function AdminLogin() {
     const onSubmit = async (data: formData) => {
         try {
             await login(data.email, data.password);
-        } catch {
-            console.log("erro");
+        } catch(error) {
+            toast("Erro", {
+                description: error.response.data.error,
+                position: "top-center",
+                duration: 2000, 
+            });
         }
     }
 

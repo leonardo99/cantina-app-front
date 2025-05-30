@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import Delete from "./Delete";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "sonner";
 interface ApiResponse<T> {
     data: T;
     links: any;
@@ -51,7 +52,17 @@ export default function Index() {
     const handleDelete = async (item: Product) => {
         try {
             await deleteProduct(item);
+            toast("Sucesso", {
+                description: `Produto deletado com sucesso`,
+                position: "top-right",
+                duration: 2000, 
+            });
         } catch (error) {
+            toast("Erro", {
+                description: `Ocorreu um erro`,
+                position: "top-right",
+                duration: 2000, 
+            });
             console.log(error);
         } finally {
             if (products?.data) {

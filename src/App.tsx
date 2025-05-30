@@ -18,77 +18,79 @@ import ClientRegister from './Pages/Auth/Client/Register';
 import Painel from './Pages/Admin/Painel/Index';
 import OrderListAdmin from './Pages/Admin/Order/Index';
 import AdminLogin from './Pages/Auth/AdminLogin';
+import { Toaster } from './components/ui/sonner';
 
 function App() {
   
   return (
       <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route 
-                   path='/'
-                   element={ <PublicRoute><Login /></PublicRoute> }
-            />
-            <Route 
-                   path='/admin/login'
-                   element={ <PublicRoute><AdminLogin /></PublicRoute> }
-            />
-            <Route 
-                   path='/admin/register'
-                   element={ <PublicRoute><AdminRegister /></PublicRoute> }
-            />
-            <Route 
-                   path='/client/register'
-                   element={ <PublicRoute><ClientRegister /></PublicRoute> }
-            />
-            <Route 
-                   path='/dashboard' 
-                   element={ <PrivateRoute><Home /></PrivateRoute> }
-            />
+              <BrowserRouter>
+                     <Toaster />
+                     <Routes>
+                     <Route 
+                            path='/'
+                            element={ <PublicRoute><Login /></PublicRoute> }
+                     />
+                     <Route 
+                            path='/admin/login'
+                            element={ <PublicRoute><AdminLogin /></PublicRoute> }
+                     />
+                     <Route 
+                            path='/admin/register'
+                            element={ <PublicRoute><AdminRegister /></PublicRoute> }
+                     />
+                     <Route 
+                            path='/client/register'
+                            element={ <PublicRoute><ClientRegister /></PublicRoute> }
+                     />
+                     <Route 
+                            path='/dashboard' 
+                            element={ <PrivateRoute><Home /></PrivateRoute> }
+                     />
 
-            <Route 
-                   path='/user/order' 
-                   element={ <PrivateRoute><Orders /></PrivateRoute> }
-            />
-            <Route 
-                   path='/user/dependent/create' 
-                   element={ <PrivateRoute><DependentForm /></PrivateRoute> }
-            />
-            <Route 
-                   path='/user/dependent' 
-                   element={ <PrivateRoute><DependentList /></PrivateRoute> }
-            />
+                     <Route 
+                            path='/user/order' 
+                            element={ <PrivateRoute><Orders /></PrivateRoute> }
+                     />
+                     <Route 
+                            path='/user/dependent/create' 
+                            element={ <PrivateRoute><DependentForm /></PrivateRoute> }
+                     />
+                     <Route 
+                            path='/user/dependent' 
+                            element={ <PrivateRoute><DependentList /></PrivateRoute> }
+                     />
 
-            <Route 
-                   path='/admin/product' 
-                   element={ <PrivateRouteAdmin><Index /></PrivateRouteAdmin> }
-            />
-            <Route 
-                   path='/admin/product/create' 
-                   element={ <PrivateRouteAdmin><Form /></PrivateRouteAdmin> }
-            />
-            <Route 
-                   path='/admin/product/:productId/edit' 
-                   element={ <PrivateRouteAdmin><Edit /></PrivateRouteAdmin> }
-            />
-            <Route 
-                   path='/admin/category' 
-                   element={ <PrivateRouteAdmin><Category /></PrivateRouteAdmin> }
-            />
-            <Route 
-                   path='/admin/category/create' 
-                   element={ <PrivateRouteAdmin><FormCategory /></PrivateRouteAdmin> }
-            />
-            <Route 
-                   path='/admin/painel' 
-                   element={ <PrivateRouteAdmin><Painel /></PrivateRouteAdmin> }
-            />
-            <Route 
-                   path='/admin/order' 
-                   element={ <PrivateRouteAdmin><OrderListAdmin /></PrivateRouteAdmin> }
-            />
-          </Routes>
-        </BrowserRouter>
+                     <Route 
+                            path='/admin/product' 
+                            element={ <PrivateRouteAdmin><Index /></PrivateRouteAdmin> }
+                     />
+                     <Route 
+                            path='/admin/product/create' 
+                            element={ <PrivateRouteAdmin><Form /></PrivateRouteAdmin> }
+                     />
+                     <Route 
+                            path='/admin/product/:productId/edit' 
+                            element={ <PrivateRouteAdmin><Edit /></PrivateRouteAdmin> }
+                     />
+                     <Route 
+                            path='/admin/category' 
+                            element={ <PrivateRouteAdmin><Category /></PrivateRouteAdmin> }
+                     />
+                     <Route 
+                            path='/admin/category/create' 
+                            element={ <PrivateRouteAdmin><FormCategory /></PrivateRouteAdmin> }
+                     />
+                     <Route 
+                            path='/admin/painel' 
+                            element={ <PrivateRouteAdmin><Painel /></PrivateRouteAdmin> }
+                     />
+                     <Route 
+                            path='/admin/order' 
+                            element={ <PrivateRouteAdmin><OrderListAdmin /></PrivateRouteAdmin> }
+                     />
+                     </Routes>
+              </BrowserRouter>
       </AuthProvider>
   )
 }
